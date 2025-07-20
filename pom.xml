@@ -21,11 +21,13 @@
     <properties>
         <java.version>21</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring-cloud-dependencies.version>2023.0.3</spring-cloud-dependencies.version>
     </properties>
 
     <!-- Добавляем модули проекта -->
     <modules>
-        <module>main-service</module>
+        <module>core</module>
+        <module>infra</module>
         <module>stats</module>
     </modules>
 
@@ -66,7 +68,6 @@
                         <dependency>
                             <groupId>com.puppycrawl.tools</groupId>
                             <artifactId>checkstyle</artifactId>
-                            <version>10.3</version>
                         </dependency>
                     </dependencies>
                 </plugin>
@@ -75,7 +76,7 @@
                 <plugin>
                     <groupId>com.github.spotbugs</groupId>
                     <artifactId>spotbugs-maven-plugin</artifactId>
-                    <version>4.8.5.0</version>
+                    <version>4.9.3.2</version>
                     <configuration>
                         <effort>Max</effort>
                         <threshold>High</threshold>
@@ -229,7 +230,15 @@
                 <artifactId>jakarta.validation-api</artifactId>
                 <version>3.0.2</version>
             </dependency>
-        </dependencies>
 
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud-dependencies.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
     </dependencyManagement>
+
 </project>
