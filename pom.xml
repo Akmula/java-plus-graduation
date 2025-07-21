@@ -25,7 +25,8 @@
 
     <!-- Добавляем модули проекта -->
     <modules>
-        <module>main-service</module>
+        <module>core</module>
+        <module>infra</module>
         <module>stats</module>
     </modules>
 
@@ -66,7 +67,7 @@
                         <dependency>
                             <groupId>com.puppycrawl.tools</groupId>
                             <artifactId>checkstyle</artifactId>
-                            <version>10.3</version>
+                            <version>9.3</version>
                         </dependency>
                     </dependencies>
                 </plugin>
