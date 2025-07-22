@@ -14,11 +14,11 @@ import ru.practicum.ewm.dto.ViewStatsDto;
 import java.net.URI;
 import java.util.List;
 
-public class StatsServer {
+public class StatClient {
     private final DiscoveryClient discoveryClient;
     private final String statsServerId;
 
-    public StatsServer(DiscoveryClient discoveryClient, String statsServerId) {
+    public StatClient(DiscoveryClient discoveryClient, String statsServerId) {
         this.discoveryClient = discoveryClient;
         this.statsServerId = statsServerId;
     }
