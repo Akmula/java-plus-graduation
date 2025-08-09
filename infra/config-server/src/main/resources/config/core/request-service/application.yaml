@@ -7,9 +7,9 @@ spring:
 
   # PostgreSQL
   datasource:
-    url: jdbc:postgresql://localhost:6542/ewm-db
-    username: stats
-    password: stats
+    url: jdbc:postgresql://localhost:6544/request-db
+    username: request
+    password: request
     driverClassName: org.postgresql.Driver
 
   # JPA (Hibernate)
