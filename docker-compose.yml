@@ -1,15 +1,4 @@
 services:
-  stats-server:
-    build: stats/stats-server
-    container_name: stats-server
-    ports:
-      - "9090:9090"
-    depends_on:
-      - stats-db
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://stats-db:5432/stats-db
-      - SPRING_DATASOURCE_USERNAME=stats
-      - SPRING_DATASOURCE_PASSWORD=stats
 
   stats-db:
     image: postgres:16.1
@@ -26,29 +15,60 @@ services:
       interval: 5s
       retries: 10
 
-  ewm-service:
-    build: core/main-service
-    container_name: ewm-service
-    ports:
-      - "8080:8080"
-    depends_on:
-      - ewm-db
-      - stats-server
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://ewm-db:5432/ewm-db
-      - SPRING_DATASOURCE_USERNAME=stats
-      - SPRING_DATASOURCE_PASSWORD=stats
-      - STAT_SERVER_URL=http://stats-server:9090   # добавлено
-
-  ewm-db:
+  comment-db:
     image: postgres:16.1
-    container_name: ewm-db
+    container_name: comment-db
     ports:
-      - "6542:5432"   # исправлено
+      - "6542:5432"
     environment:
-      - POSTGRES_USER=stats
-      - POSTGRES_PASSWORD=stats
-      - POSTGRES_DB=ewm-db
+      - POSTGRES_USER=comment
+      - POSTGRES_PASSWORD=comment
+      - POSTGRES_DB=comment-db
+    healthcheck:
+      test: pg_isready -q -d $$POSTGRES_DB -U $$POSTGRES_USER
+      timeout: 5s
+      interval: 5s
+      retries: 10
+
+  event-db:
+    image: postgres:16.1
+    container_name: event-db
+    ports:
+      - "6543:5432"
+    environment:
+      - POSTGRES_USER=event
+      - POSTGRES_PASSWORD=event
+      - POSTGRES_DB=event-db
+    healthcheck:
+      test: pg_isready -q -d $$POSTGRES_DB -U $$POSTGRES_USER
+      timeout: 5s
+      interval: 5s
+      retries: 10
+
+  request-db:
+    image: postgres:16.1
+    container_name: request-db
+    ports:
+      - "6544:5432"
+    environment:
+      - POSTGRES_USER=request
+      - POSTGRES_PASSWORD=request
+      - POSTGRES_DB=request-db
+    healthcheck:
+      test: pg_isready -q -d $$POSTGRES_DB -U $$POSTGRES_USER
+      timeout: 5s
+      interval: 5s
+      retries: 10
+
+  user-db:
+    image: postgres:16.1
+    container_name: user-db
+    ports:
+      - "6545:5432"
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=user
+      - POSTGRES_DB=user-db
     healthcheck:
       test: pg_isready -q -d $$POSTGRES_DB -U $$POSTGRES_USER
       timeout: 5s
