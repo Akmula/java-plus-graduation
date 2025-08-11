@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.practicum.dto.EventFullDto;
 import ru.practicum.dto.EventShortDto;
 import ru.practicum.dto.params.EventParamsPublic;
+import ru.practicum.grpc.stats.message.RecommendedEventProto;
 import ru.practicum.service.EventService;
 
 import java.util.List;
@@ -28,9 +29,26 @@ public class PublicEventController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EventFullDto> getEventById(@PathVariable Long id,
-                                                     HttpServletRequest request) {
-        log.info("PublicEventController - Get public event. id: {}", id);
-        return ResponseEntity.ok(eventService.getEventById(id, request));
+    public ResponseEntity<EventFullDto> getEventByIdAndUserId(@PathVariable Long id,
+                                                              @RequestHeader("X-EWM-USER-ID") long userId,
+                                                              HttpServletRequest request) {
+        log.info("PublicEventController - Get public eventId and userId: {}, {}", id, userId);
+        return ResponseEntity.ok(eventService.getEventByIdAndUserId(id, userId, request));
+    }
+
+    @GetMapping("/recommendations")
+    public ResponseEntity<List<RecommendedEventProto>> getRecommendationsForUser(
+            @RequestHeader("X-EWM-USER-ID") Long userId,
+            @RequestParam(defaultValue = "5") Integer maxResults) {
+        log.info("PublicEventController - Get recommendations for userId: {}, maxResults: {}", userId, maxResults);
+        return ResponseEntity.ok(eventService.getRecommendationsForUser(userId, maxResults));
+    }
+
+    @PutMapping("/{eventId}/like")
+    public ResponseEntity<Void> sendLikeToCollector(@RequestHeader("X-EWM-USER-ID") Long userId,
+                                                    @PathVariable Long eventId) {
+        log.info("PublicEventController - Send like to Collector. userId: {}, eventId: {}", userId, eventId);
+        eventService.sendLikeToCollector(userId, eventId);
+        return ResponseEntity.noContent().build();
     }
 }

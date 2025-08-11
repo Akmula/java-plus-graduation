@@ -31,4 +31,10 @@ public class InternalRequestController implements InternalRequestFeignClient {
         requestService.saveAll(requests);
         return ResponseEntity.noContent().build();
     }
+
+    @Override
+    public ParticipationRequestDto getRequestByEventIdAndUserId(Long eventId, Long userId) {
+        log.info("Internal - Получение запроса на участие в событии: {}, пользователем: {}", eventId, userId);
+        return requestService.getRequestByEventIdAndUserId(eventId, userId);
+    }
 }
