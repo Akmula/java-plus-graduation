@@ -1,8 +1,8 @@
 package ru.practicum.client;
 
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.cloud.openfeign.SpringQueryMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import ru.practicum.circuitbreaker.InternalUserFeignClientFallback;
 import ru.practicum.dto.UserDto;
@@ -20,6 +20,6 @@ public interface InternalUserFeignClient {
     UserDto getByUserId(@PathVariable Long userId);
 
     @GetMapping
-    List<UserDto> getAll(@ModelAttribute UserParamsAdmin param);
+    List<UserDto> getAll(@SpringQueryMap UserParamsAdmin param);
 
 }

@@ -52,7 +52,7 @@ public class EventServiceImpl implements EventService {
     private final InternalUserFeignClient userClient;
     private final InternalRequestFeignClient requestClient;
     private final RecommendationsClient recommendationsClient;
-    private final UserActionClient collectorClient;
+    private final UserActionClient userActionClient;
 
     // --- PRIVATE API ---
 
@@ -369,7 +369,7 @@ public class EventServiceImpl implements EventService {
         Map<Long, Long> confirmedMap = getConfirmedRequests(List.of(event));
         Map<Long, String> initiatorNames = getInitiatorNames(List.of(event));
 
-        collectorClient.sendAction(userId, eventId, ActionTypeProto.ACTION_VIEW, Instant.now());
+        userActionClient.sendAction(userId, eventId, ActionTypeProto.ACTION_VIEW, Instant.now());
 
         return EventMapper.entityToFullDto(event,
                 confirmedMap.get(event.getId()), ratingMap.get(event.getId()), initiatorNames.get(event.getId()));
@@ -532,7 +532,7 @@ public class EventServiceImpl implements EventService {
             throw new IllegalArgumentException("Событие еще не произошло");
         }
 
-        collectorClient.sendAction(userId, eventId, ActionTypeProto.ACTION_LIKE, Instant.now());
+        userActionClient.sendAction(userId, eventId, ActionTypeProto.ACTION_LIKE, Instant.now());
     }
 
     private Map<Long, Double> getRating(List<Event> events) {
