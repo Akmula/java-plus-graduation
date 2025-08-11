@@ -17,7 +17,11 @@ public class InternalRequestFeignClientFallback implements InternalRequestFeignC
 
     @Override
     public ResponseEntity<Object> saveAll(List<ParticipationRequestDto> requests) {
+        return null;
+    }
 
+    @Override
+    public ParticipationRequestDto getRequestByEventIdAndUserId(Long eventId, Long userId) {
         return null;
     }
 }

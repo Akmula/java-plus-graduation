@@ -25,7 +25,7 @@ public class EventMapper {
                 .build();
     }
 
-    public static EventShortDto toShortDto(Event event, long confirmed, long views) {
+    public static EventShortDto toShortDto(Event event, long confirmed, double rating) {
         return EventShortDto.builder()
                 .id(event.getId())
                 .title(event.getTitle())
@@ -35,11 +35,11 @@ public class EventMapper {
                 .eventDate(event.getEventDate())
                 .initiator(new UserShortDto(event.getInitiatorId(), null))
                 .confirmedRequests(confirmed)
-                .views(views)
+                .rating(rating)
                 .build();
     }
 
-    public static EventFullDto entityToFullDto(Event event, long confirmed, long views) {
+    public static EventFullDto entityToFullDto(Event event, long confirmed, double rating, String name) {
         return EventFullDto.builder()
                 .id(event.getId())
                 .title(event.getTitle())
@@ -54,9 +54,9 @@ public class EventMapper {
                 .requestModeration(event.isRequestModeration())
                 .state(event.getState())
                 .location(new LocationDto(event.getLocation().getLat(), event.getLocation().getLon()))
-                .initiator(new UserShortDto(event.getInitiatorId(), null))
+                .initiator(new UserShortDto(event.getInitiatorId(), name))
                 .confirmedRequests(confirmed)
-                .views(views)
+                .rating(rating)
                 .build();
     }
 
@@ -64,7 +64,7 @@ public class EventMapper {
         CategoryDto category = new CategoryDto(event.getCategory().getId(), "Category Name");
         UserShortDto initiator = new UserShortDto(event.getInitiatorId(), "User Name");
         long confirmedRequests = 0L;
-        long views = 0L;
+        double rating = 0;
 
         return EventShortDto.builder()
                 .id(event.getId())
@@ -75,7 +75,7 @@ public class EventMapper {
                 .initiator(initiator)
                 .paid(event.isPaid())
                 .title(event.getTitle())
-                .views(views)
+                .rating(rating)
                 .build();
     }
 }

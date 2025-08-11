@@ -1,0 +1,61 @@
+server:
+  port: 0
+
+grpc:
+  server:
+    port: 0
+  client:
+    analyzer:
+      address: 'discovery:///analyzer'
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext
+
+spring:
+  application:
+    name: analyzer
+  kafka:
+    enable.auto.commit: false
+    consumer:
+      bootstrap-servers: "localhost:9092"
+      key.deserializer: "org.apache.kafka.common.serialization.LongDeserializer"
+
+      user-actions:
+        topic: "stats.user-actions.v1"
+        properties:
+          client.id: UserActionClient
+          group.id: "analyzer-user-actions"
+          value.deserializer: "kafka.deserializer.UserActionDeserializer"
+
+      events-similarity:
+        topic: "stats.events-similarity.v1"
+        properties:
+          client.id: EventSimilarityClient
+          group.id: "analyzer-events-similarity"
+          key.deserializer: "org.apache.kafka.common.serialization.LongDeserializer"
+          value.deserializer: "kafka.deserializer.EventSimilarityDeserializer"
+    poll.timeout: 500ms
+
+  # PostgreSQL
+  datasource:
+    url: jdbc:postgresql://localhost:6546/analyzer-db
+    username: analyzer
+    password: analyzer
+    driverClassName: org.postgresql.Driver
+
+  # JPA (Hibernate)
+  jpa:
+    database: postgresql
+    hibernate:
+      ddl-auto: update
+  properties:
+    hibernate:
+      format_sql: true
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  # SQL init (off)
+  sql:
+    init:
+      mode: never
+      schema-locations: classpath:schema.sql
+      data-locations: classpath:data.sql

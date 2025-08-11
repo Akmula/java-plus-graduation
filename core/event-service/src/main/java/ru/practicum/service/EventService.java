@@ -5,6 +5,7 @@ import ru.practicum.dto.*;
 import ru.practicum.dto.params.EventParamsAdmin;
 import ru.practicum.dto.params.EventParamsPublic;
 import ru.practicum.dto.params.UserParamsAdmin;
+import ru.practicum.grpc.stats.message.RecommendedEventProto;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public interface EventService {
 
     List<EventShortDto> getPublicEvents(EventParamsPublic params, HttpServletRequest request);
 
-    EventFullDto getEventById(Long eventId, HttpServletRequest request);
+    EventFullDto getEventByIdAndUserId(Long eventId, Long UserId, HttpServletRequest request);
 
     List<EventFullDto> getEventsByAdmin(EventParamsAdmin params);
 
@@ -32,4 +33,8 @@ public interface EventService {
     List<ParticipationRequestDto> getAllParticipationRequestsByUserIdAndEventId(Long userId, Long eventId);
 
     EventFullDto getEventByEventId(Long eventId);
+
+    List<RecommendedEventProto> getRecommendationsForUser(Long userId, Integer maxResults);
+
+    void sendLikeToCollector(Long userId, Long eventId);
 }
