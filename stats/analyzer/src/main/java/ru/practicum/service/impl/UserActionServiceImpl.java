@@ -1,4 +1,4 @@
-package ru.practicum.service.handler.impl;
+package ru.practicum.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import ru.practicum.entity.UserAction;
 import ru.practicum.ewm.stats.avro.UserActionAvro;
 import ru.practicum.repository.UserActionRepository;
-import ru.practicum.service.handler.UserActionService;
+import ru.practicum.service.UserActionService;
 
 import java.time.Instant;
 
@@ -18,10 +18,10 @@ public class UserActionServiceImpl implements UserActionService {
     private final UserActionRepository repository;
 
     @Override
-    public void handleUserAction(UserActionAvro message) {
-        long userId = message.getUserId();
-        long eventId = message.getEventId();
-        double weight = mapActionToWeight(message);
+    public void handleUserAction(UserActionAvro avro) {
+        long userId = avro.getUserId();
+        long eventId = avro.getEventId();
+        double weight = mapActionToWeight(avro);
 
         log.info("UserActionService - запись действий пользователя");
 

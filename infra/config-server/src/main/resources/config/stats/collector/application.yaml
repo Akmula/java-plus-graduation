@@ -14,11 +14,13 @@ grpc:
 spring:
   application:
     name: collector
+
+collector:
   kafka:
+    bootstrap-servers: "localhost:9092"
+    poll.timeout: 500
     producer:
-      bootstrap-servers: "localhost:9092"
       topic: "stats.user-actions.v1"
       properties:
         key.serializer: "org.apache.kafka.common.serialization.LongSerializer"
         value.serializer: "kafka.serializer.GeneralAvroSerializer"
-    poll.timeout: 1000ms

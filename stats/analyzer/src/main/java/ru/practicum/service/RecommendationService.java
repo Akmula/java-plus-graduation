@@ -1,18 +1,15 @@
 package ru.practicum.service;
 
-import ru.practicum.grpc.stats.message.InteractionsCountRequestProto;
 import ru.practicum.grpc.stats.message.RecommendedEventProto;
-import ru.practicum.grpc.stats.message.SimilarEventsRequestProto;
-import ru.practicum.grpc.stats.message.UserPredictionsRequestProto;
 
 import java.util.List;
 
 public interface RecommendationService {
 
-    List<RecommendedEventProto> getSimilarEvents(SimilarEventsRequestProto request);
+    List<RecommendedEventProto> getSimilarEvents(long eventId, long userId, int maxResults);
 
-    List<RecommendedEventProto> getRecommendationsForUser(UserPredictionsRequestProto request);
+    List<RecommendedEventProto> getRecommendationsForUser(long userId, int maxResults);
 
-    List<RecommendedEventProto> getInteractionsCount(InteractionsCountRequestProto request);
+    List<RecommendedEventProto> getInteractionsCount(List<Long> eventIds);
 
 }

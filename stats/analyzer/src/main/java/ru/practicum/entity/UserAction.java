@@ -21,14 +21,11 @@ public class UserAction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "event_id", nullable = false)
-    private Long eventId;
-
     @Column(name = "user_id", nullable = false)
     private Long userId;
 
-    @Column(name = "action_type", nullable = false)
-    private String actionType;
+    @Column(name = "event_id", nullable = false)
+    private Long eventId;
 
     @Column(name = "weight", nullable = false)
     private Double weight;

@@ -12,18 +12,18 @@ import java.time.Instant;
 
 @Slf4j
 @Service
-public class CollectorClient {
+public class UserActionClient {
 
     @GrpcClient("collector")
     private UserActionControllerGrpc.UserActionControllerBlockingStub client;
 
     public void sendAction(long userId, long eventId, ActionTypeProto actionType, Instant timestamp) {
 
-        log.info("CollectorClient — Пользователь с id: {}, совершил действие: {} в событии с id: {}.",
+        log.info("UserActionClient — Пользователь с id: {}, совершил действие: {} в событии с id: {}.",
                 userId, eventId, actionType);
 
         if (client == null) {
-            log.warn("CollectorClient — клиент не существует, отправка пропущена.");
+            log.warn("UserActionClient — клиент не существует, отправка пропущена.");
             return;
         }
 
@@ -40,11 +40,10 @@ public class CollectorClient {
 
             client.collectUserAction(request);
 
-            log.info("CollectorClient — действие: {}, отправлено в collector.", request);
+            log.info("UserActionClient — действие: {}, отправлено в collector.", request);
         } catch (Exception e) {
-            log.warn("CollectorClient - ошибка при отправке действия в collector: {}", e.getMessage());
-
-            throw new RuntimeException("CollectorClient - ошибка при отправке действия", e);
+            log.warn("UserActionClient - ошибка при отправке действия в collector: {}", e.getMessage());
+            throw new RuntimeException("UserActionClient - ошибка при отправке действия", e);
         }
     }
 }

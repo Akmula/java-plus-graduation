@@ -18,8 +18,8 @@ import ru.practicum.dto.params.UserParamsAdmin;
 import ru.practicum.enums.EventState;
 import ru.practicum.enums.ParticipationRequestStatus;
 import ru.practicum.enums.RequestStatus;
-import ru.practicum.ewm.client.CollectorClient;
 import ru.practicum.ewm.client.RecommendationsClient;
+import ru.practicum.ewm.client.UserActionClient;
 import ru.practicum.exception.ConflictException;
 import ru.practicum.exception.NotFoundException;
 import ru.practicum.exception.ValidationException;
@@ -52,7 +52,7 @@ public class EventServiceImpl implements EventService {
     private final InternalUserFeignClient userClient;
     private final InternalRequestFeignClient requestClient;
     private final RecommendationsClient recommendationsClient;
-    private final CollectorClient collectorClient;
+    private final UserActionClient collectorClient;
 
     // --- PRIVATE API ---
 

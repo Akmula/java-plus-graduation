@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
-import java.time.Instant;
 import java.util.Objects;
 
 @Entity
@@ -29,9 +28,6 @@ public class EventSimilarity {
 
     @Column(name = "score", nullable = false)
     private Double score;
-
-    @Column(name = "timestamp", nullable = false)
-    private Instant timestamp;
 
     public Long getOtherEventId(Long eventId) {
         return eventA.equals(eventId) ? eventB : eventA;

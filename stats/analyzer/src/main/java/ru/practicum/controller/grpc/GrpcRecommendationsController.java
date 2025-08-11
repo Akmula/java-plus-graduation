@@ -27,7 +27,9 @@ public class GrpcRecommendationsController extends RecommendationsControllerGrpc
         log.info("GrpcRecommendationsController - Получение похожий событий: {}", request);
 
         try {
-            List<RecommendedEventProto> recommendations = recommendationService.getSimilarEvents(request);
+            List<RecommendedEventProto> recommendations =
+                    recommendationService.getSimilarEvents(
+                            request.getEventId(), request.getUserId(), request.getMaxResults());
             recommendations.forEach(responseObserver::onNext);
             responseObserver.onCompleted();
 
@@ -44,10 +46,12 @@ public class GrpcRecommendationsController extends RecommendationsControllerGrpc
         log.info("GrpcRecommendationsController - получение рекомендаций для пользователя!");
 
         try {
-            List<RecommendedEventProto> recommendations = recommendationService.getRecommendationsForUser(request);
+            List<RecommendedEventProto> recommendations =
+                    recommendationService.getRecommendationsForUser(
+                            request.getUserId(), request.getMaxResults());
+
             recommendations.forEach(responseObserver::onNext);
             responseObserver.onCompleted();
-
             log.info("GrpcRecommendationsController - получено {} рекомендаций!", recommendations.size());
         } catch (Exception e) {
             log.error("GrpcRecommendationsController - Ошибка при получении рекомендаций: {}", e.getMessage(), e);
@@ -61,10 +65,11 @@ public class GrpcRecommendationsController extends RecommendationsControllerGrpc
         log.info("GrpcRecommendationsController -  подсчет количества взаимодействий");
 
         try {
-            List<RecommendedEventProto> interactions = recommendationService.getInteractionsCount(request);
+            List<RecommendedEventProto> interactions =
+                    recommendationService.getInteractionsCount(request.getEventIdList());
+
             interactions.forEach(responseObserver::onNext);
             responseObserver.onCompleted();
-
             log.info("GrpcRecommendationsController - Найдено {} взаимодействий!", interactions.size());
         } catch (Exception e) {
             log.error("GrpcRecommendationsController - Ошибка при подсчете взаимодействий: {}", e.getMessage(), e);

@@ -14,27 +14,6 @@ grpc:
 spring:
   application:
     name: analyzer
-  kafka:
-    enable.auto.commit: false
-    consumer:
-      bootstrap-servers: "localhost:9092"
-      key.deserializer: "org.apache.kafka.common.serialization.LongDeserializer"
-
-      user-actions:
-        topic: "stats.user-actions.v1"
-        properties:
-          client.id: UserActionClient
-          group.id: "analyzer-user-actions"
-          value.deserializer: "kafka.deserializer.UserActionDeserializer"
-
-      events-similarity:
-        topic: "stats.events-similarity.v1"
-        properties:
-          client.id: EventSimilarityClient
-          group.id: "analyzer-events-similarity"
-          key.deserializer: "org.apache.kafka.common.serialization.LongDeserializer"
-          value.deserializer: "kafka.deserializer.EventSimilarityDeserializer"
-    poll.timeout: 500ms
 
   # PostgreSQL
   datasource:
@@ -59,3 +38,25 @@ spring:
       mode: never
       schema-locations: classpath:schema.sql
       data-locations: classpath:data.sql
+
+analyzer:
+  kafka:
+    bootstrap-servers: "localhost:9092"
+    consumers:
+      user-actions:
+        topic: "stats.user-actions.v1"
+        poll-timeout: 500
+        properties:
+          enable.auto.commit: false
+          group.id: "analyzer-user-actions"
+          key.deserializer: "org.apache.kafka.common.serialization.LongDeserializer"
+          value.deserializer: "kafka.deserializer.UserActionDeserializer"
+
+      events-similarity:
+        topic: "stats.events-similarity.v1"
+        poll-timeout: 500
+        properties:
+          enable.auto.commit: false
+          group.id: "analyzer-events-similarity"
+          key.deserializer: "org.apache.kafka.common.serialization.LongDeserializer"
+          value.deserializer: "kafka.deserializer.EventSimilarityDeserializer"
