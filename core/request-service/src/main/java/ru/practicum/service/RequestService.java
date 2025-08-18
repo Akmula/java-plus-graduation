@@ -15,4 +15,7 @@ public interface RequestService {
     List<ParticipationRequestDto> getRequestsByEventId(Long eventId);
 
     void saveAll(@RequestBody List<ParticipationRequestDto> requests);
+
+    ParticipationRequestDto getRequestByEventIdAndUserId(Long eventId, Long userId);
+
 }

@@ -29,9 +29,19 @@ spring:
       schema-locations: classpath:schema.sql
       data-locations: classpath:data.sql
 
-discovery:
-  services:
-    stats-server-id: stats-server
+grpc:
+  client:
+    collector:
+      address: 'discovery:///collector'
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext
+
+    analyzer:
+      address: 'discovery:///analyzer'
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext
 
 resilience4j.circuitbreaker:
   configs:

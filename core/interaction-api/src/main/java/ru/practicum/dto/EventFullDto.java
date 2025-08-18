@@ -34,5 +34,5 @@ public class EventFullDto {
     private LocationDto location;
     private UserShortDto initiator;
     private long confirmedRequests;
-    private long views;
+    private double rating;
 }

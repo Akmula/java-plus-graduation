@@ -110,6 +110,11 @@ public class RequestServiceImpl implements RequestService {
         requestRepository.saveAll(entities);
     }
 
+    @Override
+    public ParticipationRequestDto getRequestByEventIdAndUserId(Long eventId, Long userId) {
+        return ParticipationRequestMapper.toDto(requestRepository.getRequestByEventIdAndRequesterId(eventId, userId));
+    }
+
     private UserDto getUserById(Long userId) {
         return userClient.getByUserId(userId);
     }

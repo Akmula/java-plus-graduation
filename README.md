@@ -32,6 +32,13 @@
 
 Сервис **stats-server**, служит для сбора статистики посещений и просмотров.
 
+**Этап 3: Добавлен рекомендательный сервис**
+
+Рекомендательный сервис состоит из следующих сервисов:
+- Collector
+- Aggregator
+- Analyzer
+
 ## Внутренние API
 
 * **Event-Service**  - InternalEventController
@@ -40,7 +47,8 @@
 * **Request-Service**  - InternalRequestController
     - `GET /internal/events/{eventId}/requests` - получение заявок на участие в событии по id события
     - `GET /internal/requests/save` - обновление информации о заявках на участие в событии.
-
+    - `GET /internal/events/request` - получение заявки пользователя на участие в событии.
+      
 * **User Service** 
     - `GET /admin/users` - получение списка пользователей по их id.
     - `GET /admin/users/{userId}` - получение пользователя по его id.

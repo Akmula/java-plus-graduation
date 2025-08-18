@@ -1,0 +1,33 @@
+server:
+  port: 0
+
+grpc:
+  server:
+    port: 0
+  client:
+    aggregator:
+      address: 'discovery:///aggregator'
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext
+
+spring:
+  application:
+    name: aggregator
+
+aggregator:
+  kafka:
+    bootstrap-servers: "localhost:9092"
+    producer:
+      topic: "stats.events-similarity.v1"
+      properties:
+        key.serializer: "org.apache.kafka.common.serialization.LongSerializer"
+        value.serializer: "kafka.serializer.GeneralAvroSerializer"
+    consumer:
+      topic: "stats.user-actions.v1"
+      poll.timeout: 500
+      properties:
+        enable.auto.commit: false
+        group.id: "aggregator-consumer"
+        key.deserializer: "org.apache.kafka.common.serialization.LongDeserializer"
+        value.deserializer: "kafka.deserializer.UserActionDeserializer"
